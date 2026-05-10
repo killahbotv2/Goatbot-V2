@@ -1,104 +1,172 @@
-const fs = require("fs-extra");
-const path = require("path");
-
 module.exports = {
-	config: {
-		name: "help",
-		aliases: ["menu", "commands"],
-		version: "4.8",
-		author: "NeoKEX",
-		shortDescription: "Show all available commands",
-		longDescription: "Displays a clean and premium-styled categorized list of commands.",
-		category: "system",
-		guide: "{pn}help [command name]"
-	},
+  config: {
+    name: "help",
+    version: "2.0",
+    author: "Killah",
+    countDown: 5,
+    role: 0,
+    shortDescription: "Menu des commandes",
+    longDescription: "Affiche toutes les commandes du bot",
+    category: "system",
+    guide: "{pn}"
+  },
 
-	onStart: async function ({ message, args, prefix }) {
-		const allCommands = global.GoatBot.commands;
-		const categories = {};
+  onStart: async function ({ message }) {
 
-		const emojiMap = {
-			ai: "➥", "ai-image": "➥", group: "➥", system: "➥",
-			fun: "➥", owner: "➥", config: "➥", economy: "➥",
-			media: "➥", "18+": "➥", tools: "➥", utility: "➥",
-			info: "➥", image: "➥", game: "➥", admin: "➥",
-			rank: "➥", boxchat: "➥", others: "➥"
-		};
+    const msg = `
+╔══❀•°❀°•❀══╗
+      🌸 𝗠𝗶𝗮 𝗔𝗶 🌸
+╚══❀•°❀°•❀══╝
 
-		const cleanCategoryName = (text) => {
-			if (!text) return "others";
-			return text
-				.normalize("NFKD")
-				.replace(/[^\w\s-]/g, "")
-				.replace(/\s+/g, " ")
-				.trim()
-				.toLowerCase();
-		};
+╭─〔 👑 ADMIN 〕─╮
+✧ delete
+╰───────────────╯
 
-		for (const [name, cmd] of allCommands) {
-			const cat = cleanCategoryName(cmd.config.category);
-			if (!categories[cat]) categories[cat] = [];
-			categories[cat].push(cmd.config.name);
-		}
+╭─〔 🤖 AI 〕─╮
+✧ genx ✧ metaai ✧ nbpro
+✧ pi ✧ prompt
+╰───────────────╯
 
+╭─〔 🎨 AI GENERATED 〕─╮
+✧ nijix
+╰────────────────────╯
 
-		if (args[0]) {
-			const query = args[0].toLowerCase();
-			const cmd =
-				allCommands.get(query) ||
-				[...allCommands.values()].find((c) => (c.config.aliases || []).includes(query));
-			if (!cmd) return message.reply(`❌ Command "${query}" not found.`);
+╭─〔 🖼️ AI IMAGE 〕─╮
+✧ art ✧ dalle3 ✧ gpt
+✧ imagen4 ✧ supanime
+╰───────────────────╯
 
-			const {
-				name,
-				version,
-				author,
-				guide,
-				category,
-				shortDescription,
-				longDescription,
-				aliases,
-				role 
-			} = cmd.config;
+╭─〔 🎬 AI VIDEO 〕─╮
+✧ animate
+╰──────────────────╯
 
-			const desc =
-				typeof longDescription === "string"
-					? longDescription
-					: longDescription?.en || shortDescription?.en || shortDescription || "No description";
+╭─〔 💬 BOX CHAT 〕─╮
+✧ adduser ✧ admin ✧ all
+✧ antichangeinfobox
+✧ autosetname ✧ badwords
+✧ busy ✧ count ✧ filteruser
+✧ kick ✧ onlyadminbox
+✧ refresh ✧ rules
+✧ sendnoti ✧ setname
+✧ theme ✧ unsend ✧ warn
+╰───────────────────╯
 
-			const usage =
-				typeof guide === "string"
-					? guide.replace(/{pn}/g, prefix)
-					: guide?.en?.replace(/{pn}/g, prefix) || `${prefix}${name}`;
+╭─〔 💖 CHAT 〕─╮
+✧ bby
+╰──────────────╯
 
-						const requiredRole = cmd.config.role !== undefined ? cmd.config.role : 0; 
+╭─〔 ⚙️ CONFIG 〕─╮
+✧ prefix ✧ setalias
+╰────────────────╯
 
-			return message.reply(
-				`☠️ 𝗖𝗢𝗠𝗠𝗔𝗡𝗗 𝗜𝗡𝗙𝗢 ☠️\n\n` +
-				`➥ Name: ${name}\n` +
-				`➥ Category: ${category || "Uncategorized"}\n` +
-				`➥ Description: ${desc}\n` +
-				`➥ Aliases: ${aliases?.length ? aliases.join(", ") : "None"}\n` +
-				`➥ Usage: ${usage}\n` +
-				`➥ Permission: ${requiredRole}\n` + 
-				`➥ Author: ${author}\n` +
-				`➥ Version: ${version}`
-			);
-		}
+╭─〔 🌷 CUSTOM 〕─╮
+✧ setleave ✧ setwelcome
+✧ shortcut
+╰─────────────────╯
 
-		const formatCommands = (cmds) =>
-			cmds.sort().map((cmd) => `× ${cmd}`);
+╭─〔 💰 ECONOMY 〕─╮
+✧ balancec ✧ bank
+╰─────────────────╯
 
-		let msg = `━━━☠️ 𝗡𝗲𝗼𝗞𝗘𝗫 𝗔𝗜 ☠️━━━\n`;
-		const sortedCategories = Object.keys(categories).sort();
-		for (const cat of sortedCategories) {
-			const emoji = emojiMap[cat] || "➥";
-			msg += `\n╭──『 ${cat.toUpperCase()} 』\n`; 
-			msg += `${formatCommands(categories[cat]).join(' ')}\n`; 
-			msg += `╰────────────◊\n`;
-		}
-		msg += `\n➥ Use: ${prefix}help [command name] for details\n➥Use: ${prefix}callad to talk with bot admins '_'`;
+╭─〔 🎭 ENTERTAINMENT 〕─╮
+✧ anime
+╰──────────────────────╯
 
-		return message.reply(msg);
-	}
+╭─〔 🎉 FUN 〕─╮
+✧ anisearch ✧ emojimix
+╰────────────────╯
+
+╭─〔 🎮 GAME 〕─╮
+✧ coc ✧ daily ✧ dhbc
+✧ guessnumber ✧ maze
+╰────────────────╯
+
+╭─〔 📸 IMAGE 〕─╮
+✧ 4k ✧ 4o ✧ aiphoto
+✧ avatar ✧ moon
+✧ pinterest ✧ rbg
+✧ sorthelp
+╰────────────────╯
+
+╭─〔 ℹ️ INFO 〕─╮
+✧ grouptag ✧ setrole
+✧ texttoimage ✧ tid ✧ uid
+╰────────────────╯
+
+╭─〔 🛒 MARKET 〕─╮
+✧ goatstore
+╰────────────────╯
+
+╭─〔 🎵 MEDIA 〕─╮
+✧ alldl ✧ sing ✧ tiktok
+✧ ytb
+╰────────────────╯
+
+╭─〔 🔞 NSFW 〕─╮
+✧ fak
+╰───────────────╯
+
+╭─〔 🌦️ OTHER 〕─╮
+✧ weather
+╰────────────────╯
+
+╭─〔 👑 OWNER 〕─╮
+✧ adminonly ✧ backupdata
+✧ cmd ✧ developer ✧ eval
+✧ restart ✧ update
+✧ setavt ✧ setlang
+✧ premium ✧ shell
+✧ whitelist
+╰────────────────╯
+
+╭─〔 🏆 RANK 〕─╮
+✧ customrankcard
+✧ rank ✧ rankup
+╰────────────────╯
+
+╭─〔 ☪️ RELIGION 〕─╮
+✧ ramadan
+╰──────────────────╯
+
+╭─〔 💻 SOFTWARE 〕─╮
+✧ appstore
+╰──────────────────╯
+
+╭─〔 ⚡ SYSTEM 〕─╮
+✧ account ✧ file ✧ fork
+✧ help ✧ perf ✧ stats
+✧ uptime
+╰────────────────╯
+
+╭─〔 🛠️ TOOLS 〕─╮
+✧ screenshot
+╰────────────────╯
+
+╭─〔 🔊 TTS 〕─╮
+✧ say
+╰──────────────╯
+
+╭─〔 ☁️ UPLOADER 〕─╮
+✧ imgbb
+╰──────────────────╯
+
+╭─〔 ✨ UTILITY 〕─╮
+✧ accept ✧ approve
+✧ cpanel ✧ numlookup
+✧ pfp ✧ translate
+╰──────────────────╯
+
+╭─〔 📚 WIKI 〕─╮
+✧ emojimean
+╰───────────────╯
+
+╔══❀•°❀°•❀══╗
+ 🌸 Prefix : ~
+ 💖 Owner : Killah
+ 📞 Use : ~help [cmd]
+╚══❀•°❀°•❀══╝
+`;
+
+    message.reply(msg);
+  }
 };
