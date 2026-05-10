@@ -1,172 +1,58 @@
 module.exports = {
-  config: {
-    name: "help",
-    version: "2.0",
-    author: "Killah",
-    countDown: 5,
-    role: 0,
-    shortDescription: "Menu des commandes",
-    longDescription: "Affiche toutes les commandes du bot",
-    category: "system",
-    guide: "{pn}"
-  },
+	config: {
+		name: "help",
+		version: "5.0",
+		author: "Killah",
+		countDown: 5,
+		role: 0,
+		shortDescription: "Help Menu",
+		longDescription: "Affiche toutes les commandes",
+		category: "system"
+	},
 
-  onStart: async function ({ message }) {
+	onStart: async function ({ message }) {
 
-    const msg = `
-╔══❀•°❀°•❀══╗
-      🌸 𝗠𝗶𝗮 𝗔𝗶 🌸
-╚══❀•°❀°•❀══╝
+		const commands = global.GoatBot.commands;
 
-╭─〔 👑 ADMIN 〕─╮
-✧ delete
-╰───────────────╯
+		let msg = `
+╔═══════『 ☠️ MIA AI ☠️ 』═══════╗
 
-╭─〔 🤖 AI 〕─╮
-✧ genx ✧ metaai ✧ nbpro
-✧ pi ✧ prompt
-╰───────────────╯
-
-╭─〔 🎨 AI GENERATED 〕─╮
-✧ nijix
-╰────────────────────╯
-
-╭─〔 🖼️ AI IMAGE 〕─╮
-✧ art ✧ dalle3 ✧ gpt
-✧ imagen4 ✧ supanime
-╰───────────────────╯
-
-╭─〔 🎬 AI VIDEO 〕─╮
-✧ animate
-╰──────────────────╯
-
-╭─〔 💬 BOX CHAT 〕─╮
-✧ adduser ✧ admin ✧ all
-✧ antichangeinfobox
-✧ autosetname ✧ badwords
-✧ busy ✧ count ✧ filteruser
-✧ kick ✧ onlyadminbox
-✧ refresh ✧ rules
-✧ sendnoti ✧ setname
-✧ theme ✧ unsend ✧ warn
-╰───────────────────╯
-
-╭─〔 💖 CHAT 〕─╮
-✧ bby
-╰──────────────╯
-
-╭─〔 ⚙️ CONFIG 〕─╮
-✧ prefix ✧ setalias
-╰────────────────╯
-
-╭─〔 🌷 CUSTOM 〕─╮
-✧ setleave ✧ setwelcome
-✧ shortcut
-╰─────────────────╯
-
-╭─〔 💰 ECONOMY 〕─╮
-✧ balancec ✧ bank
-╰─────────────────╯
-
-╭─〔 🎭 ENTERTAINMENT 〕─╮
-✧ anime
-╰──────────────────────╯
-
-╭─〔 🎉 FUN 〕─╮
-✧ anisearch ✧ emojimix
-╰────────────────╯
-
-╭─〔 🎮 GAME 〕─╮
-✧ coc ✧ daily ✧ dhbc
-✧ guessnumber ✧ maze
-╰────────────────╯
-
-╭─〔 📸 IMAGE 〕─╮
-✧ 4k ✧ 4o ✧ aiphoto
-✧ avatar ✧ moon
-✧ pinterest ✧ rbg
-✧ sorthelp
-╰────────────────╯
-
-╭─〔 ℹ️ INFO 〕─╮
-✧ grouptag ✧ setrole
-✧ texttoimage ✧ tid ✧ uid
-╰────────────────╯
-
-╭─〔 🛒 MARKET 〕─╮
-✧ goatstore
-╰────────────────╯
-
-╭─〔 🎵 MEDIA 〕─╮
-✧ alldl ✧ sing ✧ tiktok
-✧ ytb
-╰────────────────╯
-
-╭─〔 🔞 NSFW 〕─╮
-✧ fak
-╰───────────────╯
-
-╭─〔 🌦️ OTHER 〕─╮
-✧ weather
-╰────────────────╯
-
-╭─〔 👑 OWNER 〕─╮
-✧ adminonly ✧ backupdata
-✧ cmd ✧ developer ✧ eval
-✧ restart ✧ update
-✧ setavt ✧ setlang
-✧ premium ✧ shell
-✧ whitelist
-╰────────────────╯
-
-╭─〔 🏆 RANK 〕─╮
-✧ customrankcard
-✧ rank ✧ rankup
-╰────────────────╯
-
-╭─〔 ☪️ RELIGION 〕─╮
-✧ ramadan
-╰──────────────────╯
-
-╭─〔 💻 SOFTWARE 〕─╮
-✧ appstore
-╰──────────────────╯
-
-╭─〔 ⚡ SYSTEM 〕─╮
-✧ account ✧ file ✧ fork
-✧ help ✧ perf ✧ stats
-✧ uptime
-╰────────────────╯
-
-╭─〔 🛠️ TOOLS 〕─╮
-✧ screenshot
-╰────────────────╯
-
-╭─〔 🔊 TTS 〕─╮
-✧ say
-╰──────────────╯
-
-╭─〔 ☁️ UPLOADER 〕─╮
-✧ imgbb
-╰──────────────────╯
-
-╭─〔 ✨ UTILITY 〕─╮
-✧ accept ✧ approve
-✧ cpanel ✧ numlookup
-✧ pfp ✧ translate
-╰──────────────────╯
-
-╭─〔 📚 WIKI 〕─╮
-✧ emojimean
-╰───────────────╯
-
-╔══❀•°❀°•❀══╗
- 🌸 Prefix : ~
- 💖 Owner : Killah
- 📞 Use : ~help [cmd]
-╚══❀•°❀°•❀══╝
+        ✦ ULTRA HELP MENU ✦
+━━━━━━━━━━━━━━━━━━
 `;
 
-    message.reply(msg);
-  }
+		const categories = {};
+
+		for (const [name, cmd] of commands) {
+
+			const category = cmd.config.category || "other";
+
+			if (!categories[category])
+				categories[category] = [];
+
+			categories[category].push(name);
+		}
+
+		for (const category in categories) {
+
+			msg += `\n╭━〔 ${category.toUpperCase()} 〕━⬣\n`;
+
+			categories[category].forEach(cmdName => {
+				msg += `┃ ✧ ${cmdName}\n`;
+			});
+
+			msg += `╰━━━━━━━━━━━━⬣\n`;
+		}
+
+		msg += `
+━━━━━━━━━━━━━━━━━━
+✦ OWNER : Killah
+✦ BOT : MIA AI
+✦ STATUS : ONLINE 🚀
+━━━━━━━━━━━━━━━━━━
+
+╚═══════『 ⚡ READY ⚡ 』═══════╝`;
+
+		return message.reply(msg);
+	}
 };
