@@ -23,7 +23,7 @@ module.exports = {
 				"Salut 👋",
 				"Coucou ❤️",
 				"Yo 😎",
-				"Bonjour 😊"
+				"Bonjour 😗"
 			],
 
 			"salut": [
